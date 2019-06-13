@@ -1,12 +1,8 @@
 # Azimuth Golf Simulator
 - Azimuth: A golf simulator built upon advanced machine learning and deep learning models
-- A group project by:
-  - Prakhar Agrawal
-  - Eddie Owens
-  - Xiao Han
-  - Jenny Kong
-  - Xinke Sun
-  - Zhe Yuan
+- A group project by: Prakhar Agrawal, Eddie Owens, Xiao Han, Jenny Kong, Xinke Sun, Zhe Yuan
+
+Model training code has not been included in this repository. In case it is added in the future, a link to the same will be added here.
 
 ## How it works:
 
