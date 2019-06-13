@@ -1,0 +1,13 @@
+Management Team
+===============
+Eddie Owens - Product Manager and Data Scientist
+
+Prakhar Agrawal - Product Manager and Data Scientist
+
+Xiao Han - Data Scientist and Backend Engineer
+
+Zhe Yuan - Data Scientist and Backend Engineer
+
+Jenny Kong - Frontend Engineer and DevOps
+
+Xinke Sun - Frontend Engineer and DevOps

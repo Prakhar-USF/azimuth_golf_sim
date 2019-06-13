@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" \
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" \
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" \
+          crossorigin="anonymous">
+    <style>
+        .row div{padding: 20px 10px; border:1px solid;}
+    </style>
+    <title>About Us</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138977540-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-138977540-1');
+    </script>
+</head>
+<body background="../static/golf.jpg"
+      style="background-repeat:no-repeat; background-size:
+      100% 100%; background-attachment: fixed;">
+  <div class="jumbotron-fluid" style="background: transparent">
+    <div class="container-fluid">
+      <ul class="list-inline align-items-center">
+        <li class="list-inline-item align-middle"><a href="/"><img src="{{ url_for('static', filename='logo.png',_t=val1) }}" height="60" /></a></li>
+        <li class="list-inline-item align-middle"><h1 class="display-4" style="color:black";>Welcome to Azimuth!</h1></li>
+      </ul>
+    </div>
+  </div>
+  <h2>About Us</h2>
+  <p>Azimuth, Inc. will produce an application which golfers of all abilities can use to hone their skills, challenge themselves, and compete and interact with friends. We will provide our users a Topgolf-like experience, but they won’t even have to leave their house! It will start as a web application where users will upload a slow-motion video of themselves hitting a golf ball into a net. We will then predict where the ball would have gone and display a simulation of the flight path. Users will be able to create profiles and interact with each other like on any social network. There will be contests where users can compete against their friends for bragging rights or even against the entire Azimuth community for prizes.</p>
+
+  <h2>Our Story</h2>
+  <p>Many golfers live in urban areas where golf is not easily accessible or in places where the weather makes it impossible to play outside for parts of the year. For example, there is only one driving range in Manhattan, which is usually quite busy on the weekends and when the weather is nice. Golfers in these locations often have to resort to indoor facilities, which in many cases, means hitting balls into a net in a garage or basement. While this is an inexpensive and time-saving option, it has one major shortcoming: the golfer doesn’t know where their shot would have gone. Without this knowledge, the quality of the practice is decreased and the experience is less enjoyable.</p>
+ 
+  <p>Currently, gaining this knowledge is very expensive - to keep the convenience of being at home, one would have to buy a simulator, which ranges from around $2000 to $20000 and up. The other alternative is to visit a facility that rents out time on a simulator, but this sacrifices the convenience of being at home, and can still cost $30-$60/hour. There are lower cost simulators, but these measure only the swing and not the impact with the ball, and therefore require tedious calibration and still provide less accurate predictions. Even these options are still $300 and up.</p>
+
+  <p>Additionally, none of these simulators appears to have any sort of social element to them. There is a generation of under-40 golfers that has grown up in a social media age, but without any app that provides an online community for the sport they love. That will change with Azimuth.</p>
+
+</body>
+</html>

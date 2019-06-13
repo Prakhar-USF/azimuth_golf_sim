@@ -1,0 +1,171 @@
+{% extends "bootstrap/base.html" %}
+
+{% block html_attribs %}
+    lang="en"
+{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    {% include 'head.html' %}
+{% endblock %}
+
+{% block title %}
+    Azimuth Contests
+{% endblock %}
+
+{% block metas %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+{% endblock %}
+
+{% block styles %}
+{#{{super()}}#}
+    <!-- Bootstrap core CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900|Playfair+Display:400,700,900 " rel="stylesheet">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/icomoon/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fancybox.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datepicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/flaticon/font/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+<br>
+        <br>
+         <h2 class="section-title mb-3"  align="center">{{ contest.title }}</h2>
+            <br>
+            <div class="row" align="center">
+            {% if current_user.is_authenticated %}
+                {% if current_user.id not in exist_user_ids %}
+                    <div class="col-lg-6" align="right">
+                        <p><a href="{{ url_for('upload', contest_id=contest.id) }}"
+                              class="btn btn-primary mr-2 mb-2">Join Now</a></p>
+                    </div>
+                    <div class="col-lg-6" align="left">
+                        <p><a href="{{ url_for('profile', user_id=current_user.id) }}"
+                              class="btn btn-primary mr-2 mb-2">Back to Profile</a></p>
+                    </div>
+                {% else %}
+                    <div class="col" align="center">
+                        <p><a href="{{ url_for('profile', user_id=current_user.id) }}"
+                              class="btn btn-primary mr-2 mb-2">Back to Profile</a></p>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="col" align="center">
+                <p><a href="/login" class="btn btn-primary mr-2 mb-2">Join Now</a></p>
+                </div>
+            {% endif %}
+            </div>
+        <div class="row">
+            <h4 class="mb-3 font-weight-normal"></br>{{ contest.description }}</h4>
+        </div>
+        <br>
+        <hr>
+        <table class="table">
+        <div class="w-50 p-3">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Ranking</th>
+              <th scope="col">User Name</th>
+              <th scope="col">Distance from Target (yds)</th>
+              <th scope="col">Total Distance (yds)</th>
+              <th scope="col">Carry (yds)</th>
+              <th scope="col">Offline (yds)</th>
+              <th scope="col">Entry Date</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for user in users_in_contest %}
+            <tr>
+              <th scope="row">{{ loop.index }}</th>
+              <td>{{ user[0] }}</td>
+              <td>{{ user[5]|round(2, 'common') }}</td>
+              <td>{{ user[1]|round(2, 'common') }}</td>
+              <td>{{ user[2]|round(2, 'common') }}</td>
+              <td>{{ user[3]|round(2, 'common') }}</td>
+              <td>{{ user[4] }}</td>
+            </tr>
+
+           {% endfor %}
+          </tbody>
+
+        </div>
+        </table>
+        <br>
+        <br>
+        <hr>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-5">
+            <h2 class="footer-heading mb-4">About Azimuth</h2>
+            <p>Azimuth, Inc. is an application which golfers of all abilities can use to hone their skills,
+              challenge themselves, and compete and interact with friends with a Topgolf-like experience.</p>
+           </div>
+          <div class="col-md-3 ml-auto">
+            <h2 class="footer-heading mb-4">Quick Links</h2>
+            <ul class="list-unstyled">
+              <li><a href="/#about-section">About Us</a></li>
+              <li><a href="/#features-section">Features</a></li>
+              <li><a href="/#testimonials-section">Testimonials</a></li>
+              <li><a href="/#contact-section">Contact Us</a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="mb-4">
+            <h2 class="footer-heading mb-4">Subscribe Newsletter</h2>
+            <form action="#" method="post" class="footer-subscribe">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control border-secondary text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-primary text-black" type="button" id="button-addon2">Send</button>
+                </div>
+              </div>
+            </form>
+        </div>
+
+        <div class="">
+          <h2 class="footer-heading mb-4">Follow Us</h2>
+            <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+            <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
+            <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
+            <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="row pt-5 mt-5 text-center">
+      <div class="col-md-12">
+        <div class="border-top pt-5">
+        <p>
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+        </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</footer>
+{% endblock %}

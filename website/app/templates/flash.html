@@ -1,0 +1,30 @@
+{% with success = get_flashed_messages(category_filter=["success"]) %}
+  {% if success %}
+    <div class="bg-info" style="padding: 15px;">
+      {% for message in success %}
+        {{ message }}
+      {% endfor %}
+      </div>
+      {% endif %}
+{% endwith %}
+
+
+
+
+{% with errors = get_flashed_messages(category_filter=["error"]) %}
+{% if errors %}
+<div class="alert alert-danger alert-dismissible" >
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {% autoescape false %}
+    <ul>
+      {% for msg in errors %}
+        <a>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            {{ msg }}<br>
+        </a>
+      {% endfor %}
+    </ul>
+    {% endautoescape %}
+</div>
+{% endif %}
+{% endwith %}

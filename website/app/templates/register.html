@@ -1,0 +1,52 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block html_attribs %}
+    lang="en"
+{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    {% include 'head.html' %}
+{% endblock %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block metas %}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+{% endblock %}
+
+{% block styles %}
+{#{{super()}}#}
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signin.css') }}">
+{% endblock %}
+
+{% block content %}
+    <body class="text-center" data-gr-c-s-loaded="true">
+        <div class="container">
+            {% include 'flash.html' %}
+
+            <form class="form-signin" method="POST"> <!-- post : handle submission -->
+            <a href="/">
+              <img src="{{ url_for('static', filename='images/logo.png', _t=val1) }}" height="100" width="100" />
+            </a>
+                <h1 class="h3 mb-3 font-weight-normal"></br>Welcome to Azimuth!</h1>
+                {{ form.hidden_tag() }}
+                {{ wtf.form_field(form.username, class="form-control", placeholder="Username") }}
+                {{ wtf.form_field(form.email, class="form-control", placeholder="Email") }}
+                {{ wtf.form_field(form.password, class="form-control", placeholder="Password") }}
+                {{ wtf.form_field(form.password_confirmation, class="form-control", placeholder="Confirm Password") }}
+                </br>
+                <center> {{ wtf.form_field(form.submit, class="btn btn-lg btn-primary btn-block btn-success")}} </center>
+                <center><p class="mt-5 mb-3 text-muted">©Azimuth,Ltd 2019-2020</p></center>
+            </form>
+        </div> <!-- /container -->
+
+    </body>
+{% endblock %}
+

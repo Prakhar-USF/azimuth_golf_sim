@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" \
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" \
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" \
+          crossorigin="anonymous">
+    <style>
+        .row div{padding: 20px 10px; border:0px solid;}
+    </style>
+    <title>Our Team</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138977540-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-138977540-1');
+    </script>
+
+</head>
+<body background="../static/golf.jpg"
+      style="background-repeat:no-repeat; background-size:
+      100% 100%; background-attachment: fixed;">
+  <div class="jumbotron-fluid" style="background: transparent">
+    <div class="container-fluid">
+      <ul class="list-inline align-items-center">
+        <li class="list-inline-item align-middle"><a href="/"><img src="{{ url_for('static', filename='logo.png',_t=val1) }}" height="60" /></a></li>
+        <li class="list-inline-item align-middle"><h1 class="display-4" style="color:black";>Our Team</h1></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container">
+  <div class="row align-items-center" style="border-color:white;">
+    <div class="col" align="center">
+      <img src="{{ url_for('static', filename='edward_owens.jpg',_t=val1) }}" />
+      <p>Edward Owens<br>Product Manager</p>
+    </div>
+    <div class="col" align="center">
+      <img src="{{ url_for('static', filename='jenny_kong.jpg',_t=val1) }}" />
+      <p>Jenny Kong<br>Data Engineer</p>
+    </div>
+    <div class="col" align="center">
+      <img src="{{ url_for('static', filename='prakhar_agrawal.jpg',_t=val1) }}" />
+      <p>Prakhar Agrawal<br>Product Manager</p>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col" align="center">
+      <img src="{{ url_for('static', filename='xiao_han.jpg',_t=val1) }}" />
+      <p>Xiao Han<br>Data Scientist</p>
+    </div>
+    <div class="col" align="center">
+      <img src="{{ url_for('static', filename='xinke_sun.jpg',_t=val1) }}" />
+      <p>Xinke Sun<br>Data Engineer</p>
+    </div>
+    <div class="col" align="center">
+      <img src="{{ url_for('static', filename='zhe_yuan.jpg',_t=val1) }}" />
+      <p>Zhe Yuan<br>Data Scientist</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

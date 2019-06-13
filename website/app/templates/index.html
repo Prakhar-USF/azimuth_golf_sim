@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Azimuth</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900|Playfair+Display:400,700,900 " rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/icomoon/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fancybox.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datepicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/flaticon/font/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script type="javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+      <script type="javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+      <script type="javascript" src="{{ url_for('static', filename='js/jquery-migrate-3.0.1.min.js') }}"></script>
+      <script type="javascript" src="{{ url_for('static', filename='js/jquery-ui.js') }}"></script>
+      <script type="javascript" src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+      <script type="javascript" src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+      <script type="javascript" src="{{ url_for('static', filename='js/jquery.stellar.min.js') }}"></script>
+      <script type="javascript" src="{{ url_for('static', filename='js/jquery.countdown.min.js') }}"></script>
+      <script type="javascript" src="{{ url_for('static', filename='js/bootstrap-datepicker.min.js') }}"></script>
+      <script type="javascript" src="{{ url_for('static', filename='js/jquery.easing.1.3.js') }}"></script>
+      <script type="javascript" src="{{ url_for('static', filename='js/aos.js') }}"></script>
+      <script type="javascript" src="{{ url_for('static', filename='js/jquery.fancybox.min.js') }}"></script>
+      <script type="javascript" src="{{ url_for('static', filename='js/jquery.sticky.js') }}"></script>
+      <script type="javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138977540-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-138977540-1');
+    </script>
+  </head>
+
+
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+
+    <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
+        <nav class="navbar navbar-navs navbar-inverse bg-dark fixed-top" role="navigation">
+          <div class="container-fluid">
+
+              <div class="navbar-header">
+                  <a class="navbar-brand mb-0 h1" href="/">
+                      <img src={{ url_for('static', filename='images/logo.png') }} height="30" class="d-inline-block align-top"> Azimuth
+                  </a>
+              </div>
+
+              <ul class="nav navbar-inverse navbar-left">
+                  <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                  <li class="nav-item"><a href="/#about-section" class="nav-link">About</a></li>
+                  <li class="nav-item"><a href="/#features-section" class="nav-link">Features</a></li>
+                  <li class="nav-item"><a href="/contests" class="nav-link">Contests</a></li>
+                  <li class="nav-item"><a href="pricing" class="nav-link">Pricing</a></li>
+                  <li class="nav-item"><a href="/#team-section" class="nav-link">Our Team</a></li>
+                  <li class="nav-item"><a href="/#contact-section" class="nav-link">Contact</a></li>
+              </ul>
+
+              <ul class="nav navbar-inverse navbar-right">
+                  {% if current_user.is_authenticated %}
+{#                  <div class="nav-item dropdown">#}
+{#                      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">#}
+{#                          {{ current_user.username }}<span class="caret"></span>#}
+{#                      </a>#}
+{#                      <ul class="dropdown-menu">#}
+{#                          <li class="dropdown-item"><a href="{{ url_for('upload') }}">Upload Video</a></li>#}
+{#                          <li class="dropdown-item"><a href="{{ url_for('logout') }}">Logout</a></li>#}
+{#                      </ul>#}
+{#                  </div>#}
+                    <li class="nav-item"><a href="{{ url_for('upload') }}">Upload Video&nbsp;&nbsp;&nbsp</a></li>
+                    <li class="nav-item"><a href="{{ url_for('profile', user_id=current_user.id) }}">Profile&nbsp;&nbsp;&nbsp</a></li>
+                    <li class="nav-item"><a href="{{ url_for('logout') }}">Logout</a></li>
+                  {% else %}
+                  <li class="nav">
+                    <li class="nav-item"><a href="login">Sign Up/Sign In</a></li>
+                  </li>
+                  {% endif %}
+              </ul>
+
+          </div>
+        </nav>
+    </header>
+
+
+
+    <div class="site-blocks-cover overlay" style="background-image:url({{ url_for('static', filename='images/hero.jpg') }});" id="home-section">
+
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-10 mt-lg-10 text-center">
+            <h1>Azimuth Golf Simulator</h1>
+            <p class="mb-5">Enjoying golf in one click.</p>
+
+          </div>
+        </div>
+      </div>
+
+      <a href="#howitworks-section" class="smoothscroll arrow-down"><span class="icon-arrow_downward"></span></a>
+    </div>
+
+
+    <div class="py-5 bg-light site-section how-it-works" id="howitworks-section">
+      <div class="container">
+        <div class="row mb-5 justify-content-center">
+          <div class="col-md-7 text-center">
+            <h2 class="section-title mb-3" style="color:mediumseagreen">How It Works</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <div class="pr-5">
+                <img src="{{ url_for('static', filename='images/icon_1.png',_t=val1) }}" height="60" />
+                <h3 class="text-dark"><br>Record Video</h3>
+                <p>Take video of yourself hitting a golf ball - real or plastic - with a club in slow motion.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4 text-center">
+            <div class="pr-5">
+              <img src="{{ url_for('static', filename='images/icon_2.png',_t=val1) }}" height="60" />
+              <h3 class="text-dark"><br>Upload Video</h3>
+              <p>Upload video to Azimuth.com</p>
+            </div>
+          </div>
+
+          <div class="col-md-4 text-center">
+            <div class="pr-5">
+                <img src="{{ url_for('static', filename='images/icon_3.png',_t=val1) }}" height="60" />
+              <h3 class="text-dark"><br>Enjoy!</h3>
+              <p>Appreciate the result of your spectacular hit</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row-lg-18" align="center">
+            <p><a href="upload" class="btn btn-primary mr-2 mb-2"
+                  onclick="gtag('event', 'click',{'event_category':'button',
+                  'event_label': 'try_button', 'value':5});">Try Now</a></p>
+        </div>
+      </div>
+    </div>
+
+
+    <section class="site-section" id="about-section">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-6">
+              <img src="{{ url_for('static', filename='images/property_1.jpg',_t=val1) }}" alt="Image" class="img-fluid">
+              <img src="{{ url_for('static', filename='images/property_4.jpg',_t=val1) }}" alt="Image" class="img-fluid">
+          </div>
+          <div class="col-lg-5 ml-auto">
+
+            <h2 class="section-title mb-3">Bringing Golf to Your Apartment</h2>
+   <p>Many golfers live in urban areas where golf is not easily accessible,
+     meaning we often have to hit balls into a net in a garage or basement.</p>
+            <p>While this is an inexpensive and time-saving option, the golfer doesn’t know where their shot would have gone.
+     Without this knowledge, the quality of the practice is decreased and the experience is less enjoyable.</p>
+
+  <p>Currently, gaining this knowledge is very expensive, you have to somehow get a physical simulator.</p>
+    <p>With Azimuth, you can enjoy golf simply:</p>
+
+                <ul class="list-unstyled ul-check success">
+                  <li>Only requires one ball and one club</li>
+                  <li>No nets, no sensor, just you and you phone camera</li>
+                  <li>Cutting-edge Machine Learning techniques and ancient Physics theories</li>
+                  <li>Extremely affordable</li>
+                  <li>Sharing results with your friends</li>
+                </ul>
+
+                <p><a href="upload" class="btn btn-primary mr-2 mb-2">Try Now</a></p>
+                <p><a href="register" class="btn btn-primary mr-2 mb-2">Register for More Features</a></p>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+{#      FEATURE#}
+
+    <section class="site-section border-bottom bg-light" id="features-section">
+      <div class="container">
+
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+            <h2 class="section-title mb-3">Features</h2>
+          </div>
+        </div>
+
+        <div class="row align-items-stretch">
+            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+                <div class="unit-4 d-flex">
+                  <div class="unit-4-icon mr-4" style="width:90%;text-align:center;">
+                      <img src="{{ url_for('static', filename='images/icon_4.png',_t=val1) }}"
+                           alt="Image" class="w-50 img-fluid mb-3">
+                  </div>
+                  <div style="width:90%">
+                      <h3>Real-time Prediction</h3>
+                      <p>Instant result of your recorded shots.</p>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos-delay="100">
+                <div class="unit-4 d-flex">
+                  <div class="unit-4-icon mr-4" style="width:90%;text-align:center;">
+                      <img src="{{ url_for('static', filename='images/icon_5.png',_t=val1) }}"
+                           alt="Image" class="w-50 img-fluid mb-3">
+                  </div>
+                  <div style="width:90%">
+                    <h3>Personal Trainer</h3>
+                    <p>Keep track of your performance.</p>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos-delay="200">
+                <div class="unit-4 d-flex">
+                  <div class="unit-4-icon mr-4" style="width:90%;text-align:center;">
+                      <img src="{{ url_for('static', filename='images/icon_6.png',_t=val2) }}"
+                           alt="Image" class="w-50 img-fluid mb-5" align="center">
+                  </div>
+                  <div style="width:90%">
+                      <h3>Leaderboard</h3>
+                      <p>Share your results with the community, compete with other golfers.</p>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row-lg-18" align="center">
+            <p><a href="register" class="btn btn-primary mr-2 mb-2">Sign Up Now</a></p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="site-section" id="testimonials-section" align="center">
+    <div class="row">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+            <h2 class="section-title mb-3">People Say...</h2>
+          </div>
+        </div>
+          <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-5">
+              <div class="testimonial">
+                  <blockquote class="mb-5">
+                    <p>&ldquo;I can finally play golf in my bedroom now.&rdquo;</p>
+                  </blockquote>
+                  <figure class="mb-4 d-flex align-items-center justify-content-center">
+                    <div><img src="{{ url_for('static', filename='images/person_4a.jpg',_t=val1) }}" alt="Image" class="w-50 img-fluid mb-3"></div>
+                    <p>Eddie Owens, Professional Golfer</p>
+                  </figure>
+              </div>
+              <div class="testimonial">
+                  <blockquote class="mb-5">
+                    <p>&ldquo;My kids love it.&rdquo;</p>
+                  </blockquote>
+                  <figure class="mb-4 d-flex align-items-center justify-content-center">
+                    <div><img src="{{ url_for('static', filename='images/person_5a.jpg',_t=val1) }}" alt="Image" class="w-50 img-fluid mb-3"></div>
+                    <p>Xinke Sun, Golf Enthusiast</p>
+                  </figure>
+              </div>
+              <div class="testimonial">
+                  <blockquote class="mb-5">
+                    <p>&ldquo;My third time playing golf.&rdquo;</p>
+                  </blockquote>
+
+                  <figure class="mb-4 d-flex align-items-center justify-content-center">
+                    <div><img src="{{ url_for('static', filename='images/person_6a.jpg',_t=val1) }}" alt="Image" class="w-50 img-fluid mb-3"></div>
+                    <p>Zhe Yuan, Golf Beginner</p>
+                  </figure>
+              </div>
+          </div>
+{#            RIGHT#}
+          <div class="col-md-5">
+              <div class="testimonial">
+                  <blockquote class="mb-5">
+                    <p>&ldquo;State-of-the-art golf simulator.&rdquo;</p>
+                  </blockquote>
+
+                  <figure class="mb-4 d-flex align-items-center justify-content-center">
+                    <div><img src="{{ url_for('static', filename='images/person_1a.jpg',_t=val1) }}" alt="Image" class="w-50 img-fluid mb-3"></div>
+                    <p>Prakhar Agrawal, Male Golfer</p>
+                  </figure>
+              </div>
+              <div class="testimonial">
+                  <blockquote class="mb-5">
+                    <p>&ldquo;Go Go Golfer!"</p> </blockquote>
+                  <figure class="mb-4 d-flex align-items-center justify-content-center">
+                    <div><img src="{{ url_for('static', filename='images/person_2a.jpg',_t=val1) }}" alt="Image" class="w-50 img-fluid mb-3"></div>
+                    <p>Xiao Han, Female Golfer</p>
+                  </figure>
+              </div>
+              <div class="testimonial">
+                  <blockquote class="mb-5">
+                    <p>&ldquo;So I guess this is not mini golf.&rdquo;</p>
+                  </blockquote>
+
+                  <figure class="mb-4 d-flex align-items-center justify-content-center">
+                    <div><img src="{{ url_for('static', filename='images/person_3a.jpg',_t=val1) }}" alt="Image" class="w-50 img-fluid mb-3"></div>
+                    <p>Jenny Kong, Amateur</p>
+                  </figure>
+              </div>
+          </div>
+          <div class="col-md-1"></div>
+          </div>
+    </div>
+    </div>
+
+    </section>
+
+     <section class="site-section border-bottom" id="team-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-7 text-left">
+            <h2 class="section-title mb-3">Our Team</h2>
+            <p class="lead">Meet our adorable team members</p>
+          </div>
+        </div>
+        <div class="row">
+
+
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="team-member" align="center">
+              <figure>
+{#                <ul class="social">#}
+{#                  <li><a href="#"><span class="icon-facebook"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-twitter"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-linkedin"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-instagram"></span></a></li>#}
+{#                </ul>#}
+                <img src="{{ url_for('static', filename='images/person_1.jpg',_t=val1) }}"
+                     alt="Image" class="img-fluid" style="width:80%;height:80%;">
+              </figure>
+              <div class="p-3">
+                <h3 class="mb-2"><a href="https://www.linkedin.com/in/prakhar-agrawal3/">Prakhar Agrawal</a></h3>
+                <span class="position">Project Manager, Data Scientist</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="team-member" align="center">
+              <figure>
+{#                <ul class="social">#}
+{#                  <li><a href="#"><span class="icon-facebook"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-twitter"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-linkedin"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-instagram"></span></a></li>#}
+{#                </ul>#}
+                <img src="{{ url_for('static', filename='images/person_2.jpg',_t=val1) }}"
+                     alt="Image" class="img-fluid" style="width:80%;height:80%;">
+              </figure>
+              <div class="p-3">
+                <h3 class="mb-2"><a href="https://www.linkedin.com/in/xhan/">Xiao Han</a></h3>
+                <span class="position">Data Scientist, Full-stack Engineer</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="team-member" align="center">
+              <figure>
+{#                <ul class="social">#}
+{#                  <li><a href="#"><span class="icon-facebook"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-twitter"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-linkedin"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-instagram"></span></a></li>#}
+{#                </ul>#}
+                <img src="{{ url_for('static', filename='images/person_3.jpg',_t=val1) }}"
+                     alt="Image" class="img-fluid" style="width:80%;height:80%;">
+              </figure>
+              <div class="p-3">
+                <h3 class="mb-2"><a href="https://www.linkedin.com/in/jenny-kong-b6710412b/">Jenny Kong</a></h3>
+                <span class="position">Frontend Engineer</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="team-member" align="center">
+              <figure>
+{#                <ul class="social">#}
+{#                  <li><a href="#"><span class="icon-facebook"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-twitter"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-linkedin"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-instagram"></span></a></li>#}
+{#                </ul>#}
+                <img src="{{ url_for('static', filename='images/person_4.jpg',_t=val1) }}"
+                     alt="Image" class="img-fluid" style="width:80%;height:80%;">
+              </figure>
+              <div class="p-3">
+                <h3 class="mb-2"><a href="https://www.linkedin.com/in/edward-owens/">Eddie Owens</a></h3>
+                <span class="position">Project Manager, Data Scientist</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="team-member" align="center">
+              <figure>
+{#                <ul class="social">#}
+{#                  <li><a href="#"><span class="icon-facebook"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-twitter"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-linkedin"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-instagram"></span></a></li>#}
+{#                </ul>#}
+                <img src="{{ url_for('static', filename='images/person_5.jpg',_t=val1) }}"
+                     alt="Image" class="img-fluid" style="width:80%;height:80%;">
+              </figure>
+              <div class="p-3">
+                <h3 class="mb-2"><a href="https://www.linkedin.com/in/xinke-sun/">Xinke Sun</h3>
+                <span class="position">Frontend Engineer</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="team-member" align="center">
+              <figure>
+{#                <ul class="social">#}
+{#                  <li><a href="#"><span class="icon-facebook"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-twitter"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-linkedin"></span></a></li>#}
+{#                  <li><a href="#"><span class="icon-instagram"></span></a></li>#}
+{#                </ul>#}
+                <img src="{{ url_for('static', filename='images/person_6.jpg',_t=val1) }}"
+                     alt="Image" class="img-fluid" style="width:80%;height:80%;">
+              </figure>
+              <div class="p-3">
+                <h3 class="mb-2"><a href="https://www.linkedin.com/in/zhe-yuan-0421/">Zhe Yuan</a></h3>
+                <span class="position">Data Scientist, Backend Engineer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="site-section bg-light bg-image" id="contact-section">
+      <div class="container">
+
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+            <h2 class="section-title mb-3">Contact Us</h2>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-5">
+
+            <form action="#" class="p-5 bg-white">
+
+              <h2 class="h4 text-black mb-5">Contact Form</h2>
+
+              <div class="row form-group">
+                <div class="col-md-6 mb-3 mb-md-0">
+                  <label class="text-black" for="fname">First Name</label>
+                  <input type="text" id="fname" class="form-control">
+                </div>
+                <div class="col-md-6">
+                  <label class="text-black" for="lname">Last Name</label>
+                  <input type="text" id="lname" class="form-control">
+                </div>
+              </div>
+
+              <div class="row form-group">
+
+                <div class="col-md-12">
+                  <label class="text-black" for="email">Email</label>
+                  <input type="email" id="email" class="form-control">
+                </div>
+              </div>
+
+              <div class="row form-group">
+
+                <div class="col-md-12">
+                  <label class="text-black" for="subject">Subject</label>
+                  <input type="subject" id="subject" class="form-control">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <label class="text-black" for="message">Message</label>
+                  <textarea name="message" id="message" cols="30" rows="7" class="form-control" placeholder="Write your notes or questions here..."></textarea>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <input type="submit" value="Send Message" class="btn btn-primary btn-md text-white">
+                </div>
+              </div>
+
+
+            </form>
+          </div>
+          <div class="col-md-5">
+
+            <div class="p-4 mb-3 bg-white">
+              <p class="mb-0 font-weight-bold">Address</p>
+              <p class="mb-4">101 Howard St, San Francisco, CA 94105, USA</p>
+
+              <p class="mb-0 font-weight-bold">Phone</p>
+              <p class="mb-4">+1 (415) 123-4567</a></p>
+
+              <p class="mb-0 font-weight-bold">Email Address</p>
+              <p class="mb-0">contact@azimuth-golf.com</a></p>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-5">
+                <h2 class="footer-heading mb-4">About Azimuth</h2>
+                <p>Azimuth, Inc. is an application which golfers of all abilities can use to hone their skills,
+                  challenge themselves, and compete and interact with friends with a Topgolf-like experience.</p>
+<!--                  but they won’t even have to leave their house!-->
+<!--                  It will start as a web application where users will upload a slow-motion video of themselves-->
+<!--                  hitting a golf ball into a net. We will then predict where the ball would have gone and-->
+<!--                  display a simulation of the flight path. Users will be able to create profiles and-->
+<!--                  interact with each other like on any social network. There will be contests-->
+<!--                  where users can compete against their friends for bragging rights-->
+<!--                  or even against the entire Azimuth community for prizes.</p>-->
+               </div>
+              <div class="col-md-3 ml-auto">
+                <h2 class="footer-heading mb-4">Quick Links</h2>
+                <ul class="list-unstyled">
+                  <li><a href="/#about-section">About Us</a></li>
+                  <li><a href="/#features-section">Features</a></li>
+                  <li><a href="/#testimonials-section">Testimonials</a></li>
+                  <li><a href="/#contact-section">Contact Us</a></li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-4">
+              <h2 class="footer-heading mb-4">Subscribe Newsletter</h2>
+            <form action="#" method="post" class="footer-subscribe">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control border-secondary text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-primary text-black" type="button" id="button-addon2">Send</button>
+                </div>
+              </div>
+            </form>
+            </div>
+
+            <div class="">
+              <h2 class="footer-heading mb-4">Follow Us</h2>
+                <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+                <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
+                <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
+                <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="row pt-5 mt-5 text-center">
+          <div class="col-md-12">
+            <div class="border-top pt-5">
+            <p>
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+      </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </footer>
+
+  </div> <!-- .site-wrap -->
+
+{#  <script src="js/jquery-3.3.1.min.js"></script>#}
+{#  <script src="js/jquery-migrate-3.0.1.min.js"></script>#}
+{#  <script src="js/jquery-ui.js"></script>#}
+{#  <script src="js/popper.min.js"></script>#}
+{#  <script src="js/bootstrap.min.js"></script>#}
+{#  <script src="js/owl.carousel.min.js"></script>#}
+{#  <script src="js/jquery.stellar.min.js"></script>#}
+{#  <script src="js/jquery.countdown.min.js"></script>#}
+{#  <script src="js/bootstrap-datepicker.min.js"></script>#}
+{#  <script src="js/jquery.easing.1.3.js"></script>#}
+{#  <script src="js/aos.js"></script>#}
+{#  <script src="js/jquery.fancybox.min.js"></script>#}
+{#  <script src="js/jquery.sticky.js"></script>#}
+{##}
+{##}
+{#  <script src="js/main.js"></script>#}
+
+  </body>
+</html>

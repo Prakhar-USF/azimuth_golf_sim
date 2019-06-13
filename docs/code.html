@@ -1,0 +1,668 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>API Reference &#8212; Azimuth 0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Environment Set-up Tutorial" href="tutorial.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-make_traj">
+<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-make_traj" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="make_traj.TrackSimulation">
+<em class="property">class </em><code class="descclassname">make_traj.</code><code class="descname">TrackSimulation</code><a class="reference internal" href="_modules/make_traj.html#TrackSimulation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="make_traj.TrackSimulation.RK4">
+<code class="descname">RK4</code><span class="sig-paren">(</span><em>tn</em>, <em>xn</em>, <em>yn</em>, <em>zn</em>, <em>v_xn</em>, <em>v_yn</em>, <em>v_zn</em>, <em>w_unit_i</em>, <em>w_unit_j</em>, <em>w_unit_k</em>, <em>C_D</em>, <em>C_L</em>, <em>rho_air</em>, <em>m</em>, <em>D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.RK4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.RK4" title="Permalink to this definition">¶</a></dt>
+<dd><p>For movement of each time step, calculate total flying from beginning,
+velocity on x, y, z axis, and distance on x, y, z axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tn</strong> – float, initial time</li>
+<li><strong>xn</strong> – float, initial x-axis coordinate of ball position</li>
+<li><strong>yn</strong> – float, initial y-axis coordinate of ball position</li>
+<li><strong>zn</strong> – float, initail z-axis coordinate of ball position</li>
+<li><strong>v_xn</strong> – float, initial x-axis coordinate of ball speed</li>
+<li><strong>v_yn</strong> – float, initial y-axis coordinate of ball speed</li>
+<li><strong>v_zn</strong> – float, initial z-axis coordinate of ball speed</li>
+<li><strong>w_unit_i</strong> – float, initial x-axis coordinate of ball rotation speed</li>
+<li><strong>w_unit_j</strong> – float, initial y-axis coordinate of ball rotation speed</li>
+<li><strong>w_unit_k</strong> – float, initial z-axis coordinate of ball rotation speed</li>
+<li><strong>C_D</strong> – float, drag force coefficient</li>
+<li><strong>C_L</strong> – float, lifg force coefficient</li>
+<li><strong>rho_air</strong> – float, air density, constant</li>
+<li><strong>m</strong> – float, mass of golf ball, constant</li>
+<li><strong>D</strong> – float, diameter of golf ball, constant</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">final time, coordinates of final speed,</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>coordinates of final position</p>
+<p>For step-by-step calculations of variables changed with time,
+we integrate with fourth-order Runge-Kutta method,
+and then integrate Euler method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="make_traj.TrackSimulation.TRACK">
+<code class="descname">TRACK</code><span class="sig-paren">(</span><em>m</em>, <em>D</em>, <em>rho_air</em>, <em>C_D</em>, <em>C_L</em>, <em>v_ball</em>, <em>theta</em>, <em>phi</em>, <em>w_theta</em>, <em>w_phi</em>, <em>altitude</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.TRACK"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.TRACK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict trajectory of the ball.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>m</strong> – float, mass of golf ball, constant</li>
+<li><strong>D</strong> – float, diameter of golf ball, constant</li>
+<li><strong>rho_air</strong> – float, air density, constant</li>
+<li><strong>C_D</strong> – float, drag force coefficient</li>
+<li><strong>C_L</strong> – float, lift force coefficient</li>
+<li><strong>v_ball</strong> – float, initial ball speed</li>
+<li><strong>theta</strong> – float, angle between ball’s launch speed and ground</li>
+<li><strong>phi</strong> – float, azimuth of ball</li>
+<li><strong>w_theta</strong> – float, angle between ball’s rotation speed and ground</li>
+<li><strong>w_phi</strong> – float, angel between ball’s rotation speed’s projection on ground and x-axis</li>
+<li><strong>altitude</strong> – float, constant for specific location</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ball’s track and coordinates for final position</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="make_traj.TrackSimulation.ax">
+<code class="descname">ax</code><span class="sig-paren">(</span><em>v_ball_i</em>, <em>v_ball_j</em>, <em>v_ball_k</em>, <em>w_unit_i</em>, <em>w_unit_j</em>, <em>w_unit_k</em>, <em>C_D</em>, <em>C_L</em>, <em>rho_air</em>, <em>m</em>, <em>D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.ax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.ax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function: calculate accelerated velocity on x-axis</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>v_ball_i</strong> – float, x-axis coordinate of ball’s velocity</li>
+<li><strong>v_ball_j</strong> – float, y-axis coordinate of ball’s velocity</li>
+<li><strong>v_ball_k</strong> – float, z-axis coordinate of ball’s velocity</li>
+<li><strong>w_unit_i</strong> – float, x-axis coordinate of ball’s rotation velocity</li>
+<li><strong>w_unit_j</strong> – float, y-axis coordinate of ball’s rotation velocity</li>
+<li><strong>w_unit_k</strong> – float, z-axis coordinate of ball’s rotation velocity</li>
+<li><strong>C_D</strong> – float, drag force coefficient</li>
+<li><strong>C_L</strong> – float, lift force coefficient</li>
+<li><strong>rho_air</strong> – float, air density, constant</li>
+<li><strong>m</strong> – float, mass of golf ball, constant</li>
+<li><strong>D</strong> – float, diameter of golf ball, constant</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">x-axis value of accelerated velocity</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="make_traj.TrackSimulation.ay">
+<code class="descname">ay</code><span class="sig-paren">(</span><em>v_ball_i</em>, <em>v_ball_j</em>, <em>v_ball_k</em>, <em>w_unit_i</em>, <em>w_unit_j</em>, <em>w_unit_k</em>, <em>C_D</em>, <em>C_L</em>, <em>rho_air</em>, <em>m</em>, <em>D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.ay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.ay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function: calculate accelerated velocity on y-axis</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>v_ball_i</strong> – float, x-axis coordinate of ball’s velocity</li>
+<li><strong>v_ball_j</strong> – float, y-axis coordinate of ball’s velocity</li>
+<li><strong>v_ball_k</strong> – float, z-axis coordinate of ball’s velocity</li>
+<li><strong>w_unit_i</strong> – float, x-axis coordinate of ball’s rotation velocity</li>
+<li><strong>w_unit_j</strong> – float, y-axis coordinate of ball’s rotation velocity</li>
+<li><strong>w_unit_k</strong> – float, z-axis coordinate of ball’s rotation velocity</li>
+<li><strong>C_D</strong> – float, drag force coefficient</li>
+<li><strong>C_L</strong> – float, lifg force coefficient</li>
+<li><strong>rho_air</strong> – float, air density, constant</li>
+<li><strong>m</strong> – float, mass of golf ball, constant</li>
+<li><strong>D</strong> – float, diameter of golf ball, constant</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">y-axis value of accelerated velocity</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="make_traj.TrackSimulation.az">
+<code class="descname">az</code><span class="sig-paren">(</span><em>v_ball_i</em>, <em>v_ball_j</em>, <em>v_ball_k</em>, <em>w_unit_i</em>, <em>w_unit_j</em>, <em>w_unit_k</em>, <em>C_D</em>, <em>C_L</em>, <em>rho_air</em>, <em>m</em>, <em>D</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.az"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.az" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function: calculate accelerated velocity on z-axis</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>v_ball_i</strong> – float, x-axis coordinate of ball’s velocity</li>
+<li><strong>v_ball_j</strong> – float, y-axis coordinate of ball’s velocity</li>
+<li><strong>v_ball_k</strong> – float, z-axis coordinate of ball’s velocity</li>
+<li><strong>w_unit_i</strong> – float, x-axis coordinate of ball’s rotation velocity</li>
+<li><strong>w_unit_j</strong> – float, y-axis coordinate of ball’s rotation velocity</li>
+<li><strong>w_unit_k</strong> – float, z-axis coordinate of ball’s rotation velocity</li>
+<li><strong>C_D</strong> – float, drag force coefficient</li>
+<li><strong>C_L</strong> – float, lifg force coefficient</li>
+<li><strong>rho_air</strong> – float, air density, constant</li>
+<li><strong>m</strong> – float, mass of golf ball, constant</li>
+<li><strong>D</strong> – float, diameter of golf ball, constant</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">z-axis value of accelerated velocity</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="make_traj.TrackSimulation.calculation">
+<code class="descname">calculation</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.calculation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.calculation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Feature engineering function: calculate theta and phi for
+ball’s rotation speed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> – data frame, ball’s initial factors</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">data frame</td>
+</tr>
+</tbody>
+</table>
+<p>add column w_theta: float
+angle between ball’s rotation speed and ground
+add column w_phi: float
+angel between ball’s rotation speed’s projection on ground and x-axis</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="make_traj.TrackSimulation.cross_prod">
+<code class="descname">cross_prod</code><span class="sig-paren">(</span><em>a1</em>, <em>a2</em>, <em>a3</em>, <em>b1</em>, <em>b2</em>, <em>b3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.cross_prod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.cross_prod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function: calculate cross production for two vectors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>a1</strong> – float, x-axis coordinate of vector 1</li>
+<li><strong>a2</strong> – float, y-axis coordinate of vector 1</li>
+<li><strong>a3</strong> – float, z-axis coordinate of vector 1</li>
+<li><strong>b1</strong> – float, x-axis coordinate of vector 2</li>
+<li><strong>b2</strong> – float, y-axis coordinate of vector 2</li>
+<li><strong>b3</strong> – float, z-axis coordinate of vector 2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">float, coordinates of the cross production</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="make_traj.TrackSimulation.make_anime">
+<code class="descname">make_anime</code><span class="sig-paren">(</span><em>track</em>, <em>gif_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.make_anime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.make_anime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make animation of the trajectory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>track</strong> – </li>
+<li><strong>gif_name</strong> – target gif file name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="make_traj.TrackSimulation.minus_vec">
+<code class="descname">minus_vec</code><span class="sig-paren">(</span><em>e1</em>, <em>e2</em>, <em>e3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.minus_vec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.minus_vec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function: get a vector equal to given vector but in opposite
+direction
+:param e1: float, x-axis coordinate of vector
+:param e2: float, y-axis coordinate of vector
+:param e3: float, z-axis coordinate of vector</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">coordinates of vector which equals to the given vector but in</td>
+</tr>
+</tbody>
+</table>
+<p>the opposite direction</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="make_traj.TrackSimulation.plot_animation">
+<code class="descname">plot_animation</code><span class="sig-paren">(</span><em>x_track</em>, <em>y_track</em>, <em>z_track</em>, <em>gif_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.plot_animation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.plot_animation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an animation plot and save it to local path with the specified
+file name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x_track</strong> – track (x axis)</li>
+<li><strong>y_track</strong> – track (y axis)</li>
+<li><strong>z_track</strong> – track (z axis)</li>
+<li><strong>gif_name</strong> – target gif file name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="make_traj.TrackSimulation.traj">
+<code class="descname">traj</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.traj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.traj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the trajectory of the ball.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> – shot factors</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">end position of the ball (x, y, z) and the flying track</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="make_traj.TrackSimulation.unit_vec">
+<code class="descname">unit_vec</code><span class="sig-paren">(</span><em>c1</em>, <em>c2</em>, <em>c3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.unit_vec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.unit_vec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function: calculate unit vector</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>c1</strong> – float, x-axis coordinate of vector</li>
+<li><strong>c2</strong> – float, y-axis coordinate of vector</li>
+<li><strong>c3</strong> – float, z-axis coordinate of vector</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">float, coordinates of the unit vector</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="make_traj.TrackSimulation.update_lines">
+<code class="descname">update_lines</code><span class="sig-paren">(</span><em>num</em>, <em>data</em>, <em>line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.update_lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.update_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assistant function: iteratively update trajectory for ball</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>num</strong> – float, number of points in trajectory</li>
+<li><strong>data</strong> – array, 3 by n array which records trajectory</li>
+<li><strong>line</strong> – object</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">iterable trajectory</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="make_traj.TrackSimulation.vec_length">
+<code class="descname">vec_length</code><span class="sig-paren">(</span><em>d1</em>, <em>d2</em>, <em>d3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/make_traj.html#TrackSimulation.vec_length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#make_traj.TrackSimulation.vec_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function: calculate the length of vector</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>d1</strong> – float, x-axis coordinate of vector</li>
+<li><strong>d2</strong> – float, y-axis coordinate of vector</li>
+<li><strong>d3</strong> – float, z-axis coordinate of vector</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">float, Euclidean length of the vector</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-predict"></span><dl class="class">
+<dt id="predict.Decoder">
+<em class="property">class </em><code class="descclassname">predict.</code><code class="descname">Decoder</code><a class="reference internal" href="_modules/predict.html#Decoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#predict.Decoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Video decoder.</p>
+<dl class="method">
+<dt id="predict.Decoder.decode">
+<code class="descname">decode</code><span class="sig-paren">(</span><em>filename: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict.html#Decoder.decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#predict.Decoder.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main function to decode a video file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – file path</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="predict.Step1">
+<em class="property">class </em><code class="descclassname">predict.</code><code class="descname">Step1</code><a class="reference internal" href="_modules/predict.html#Step1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#predict.Step1" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="predict.Step1.get_features">
+<code class="descname">get_features</code><span class="sig-paren">(</span><em>actual_contour</em>, <em>plot=False</em>, <em>frame_no=None</em>, <em>bbox_no=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict.html#Step1.get_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#predict.Step1.get_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate contour features: 80% width, max width, leading edge (x, y),
+direction, distance, frame index, bounding box index (if exist)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>actual_contour</strong> – the contour to be analyzed</li>
+<li><strong>plot</strong> – bool, default False, if True, plot the contour</li>
+<li><strong>frame_no</strong> – frame index</li>
+<li><strong>bbox_no</strong> – the index of the bounding box detected in the frame</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">contour features</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="predict.Step1.get_frames">
+<code class="descname">get_frames</code><span class="sig-paren">(</span><em>video_path: str</em><span class="sig-paren">)</span> &#x2192; List[T]<a class="reference internal" href="_modules/predict.html#Step1.get_frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#predict.Step1.get_frames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract frames from a video.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>video_path</strong> – video file path</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of frames</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="predict.Step1.get_width">
+<code class="descname">get_width</code><span class="sig-paren">(</span><em>actual_contour</em>, <em>y_val</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict.html#Step1.get_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#predict.Step1.get_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="predict.Step1.step_1">
+<code class="descname">step_1</code><span class="sig-paren">(</span><em>video_path</em>, <em>ball_init</em>, <em>frames</em>, <em>predict_impact</em>, <em>classify_bbox</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict.html#Step1.step_1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#predict.Step1.step_1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Step One: find the frames in which the ball has been hit and is flying,
+then get the contour features and bounding boxes of the moving ball.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>video_path</strong> – video file path</li>
+<li><strong>ball_init</strong> – (currently fixed) bounding box of the pre-impact ball</li>
+<li><strong>frames</strong> – a list of frames</li>
+<li><strong>predict_impact</strong> – model for predicting the exact frame</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>when the ball is hit
+:param classify_bbox: model for detecting the bounding boxes
+:return: three lists - frame indices, contour features, bounding boxes</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="predict.Step2">
+<em class="property">class </em><code class="descclassname">predict.</code><code class="descname">Step2</code><a class="reference internal" href="_modules/predict.html#Step2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#predict.Step2" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="predict.Step2.add_na_rows">
+<code class="descname">add_na_rows</code><span class="sig-paren">(</span><em>shot_df</em>, <em>session_init</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict.html#Step2.add_na_rows"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#predict.Step2.add_na_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add na rows (filled with -1’s) if there is a gap in the frames
+in which the ball is detected.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>shot_df</strong> – shot factors</li>
+<li><strong>session_init</strong> – bounding box of the ball pre-impact</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">data frame with missing frames filled</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="predict.Step2.get_shot_factors">
+<code class="descname">get_shot_factors</code><span class="sig-paren">(</span><em>video_path</em>, <em>ball_init</em>, <em>predict_impact</em>, <em>classify_bbox</em>, <em>azimuth_regr</em>, <em>back_spin_regr</em>, <em>ball_speed_regr</em>, <em>launch_angle_regr</em>, <em>side_spin_dt</em>, <em>azimuth_high</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict.html#Step2.get_shot_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#predict.Step2.get_shot_factors" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main function to get shot factors from raw video file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>video_path</strong> – video file path</li>
+<li><strong>ball_init</strong> – (currently fixed) bounding box of the pre-impact ball</li>
+<li><strong>predict_impact</strong> – model for predicting the exact frame</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>when the ball is hit
+:param classify_bbox: model for detecting the bounding boxes
+:param azimuth_regr: model to predict azimuth
+:param back_spin_regr: model to predict back-spin
+:param ball_speed_regr: model to predict ball speed
+:param launch_angle_regr: model to predict azimuth
+:param side_spin_dt: model to predict side-spin
+:param azimuth_high: model to predict azimuth (high)
+:return: a dictionary of factors {factor name: value}</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="predict.Step2.make_df">
+<code class="descname">make_df</code><span class="sig-paren">(</span><em>frame_nos</em>, <em>ball_contour_features</em>, <em>ball_init</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/predict.html#Step2.make_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#predict.Step2.make_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a data frame for the output of <cite>Step1.step_1</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>frame_nos</strong> – selected frame indices</li>
+<li><strong>ball_contour_features</strong> – ball contour features</li>
+<li><strong>ball_init</strong> – (currently fixed) bounding box of the pre-impact ball</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">data frame including all the input information</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="predict.Step2.make_predictions">
+<code class="descname">make_predictions</code><span class="sig-paren">(</span><em>wide_df</em>, <em>ball_init</em>, <em>azimuth_regr</em>, <em>back_spin_regr</em>, <em>ball_speed_regr</em>, <em>launch_angle_regr</em>, <em>side_spin_dt</em>, <em>azimuth_high</em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="_modules/predict.html#Step2.make_predictions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#predict.Step2.make_predictions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the five factors needed for trajectory prediction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>wide_df</strong> – data frame of contour data</li>
+<li><strong>ball_init</strong> – (currently fixed) bounding box of the pre-impact ball</li>
+<li><strong>azimuth_regr</strong> – model to predict azimuth</li>
+<li><strong>back_spin_regr</strong> – model to predict back-spin</li>
+<li><strong>ball_speed_regr</strong> – model to predict ball speed</li>
+<li><strong>launch_angle_regr</strong> – model to predict azimuth</li>
+<li><strong>side_spin_dt</strong> – model to predict side-spin</li>
+<li><strong>azimuth_high</strong> – model to predict azimuth (high)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a dictionary of factors {factor name: value}</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Azimuth</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">About Us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Management Team</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Environment Set-up Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tutorial.html" title="previous chapter">Environment Set-up Tutorial</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Azimuth, Ltd.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/code.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

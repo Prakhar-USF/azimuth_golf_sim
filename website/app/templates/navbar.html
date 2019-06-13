@@ -1,0 +1,42 @@
+<nav class="navbar navbar-navs navbar-inverse bg-dark fixed-top" role="navigation">
+  <div class="container-fluid">
+
+      <div class="navbar-header">
+          <a class="navbar-brand mb-0 h1" href="/">
+              <img src={{ url_for('static', filename='images/logo.png') }} height="30" class="d-inline-block align-top"> Azimuth
+          </a>
+      </div>
+
+      <ul class="nav navbar-inverse navbar-left">
+          <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="/#about-section" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="/#features-section" class="nav-link">Features</a></li>
+          <li class="nav-item"><a href="/contests" class="nav-link">Contests</a></li>
+          <li class="nav-item"><a href="/pricing" class="nav-link">Pricing</a></li>
+          <li class="nav-item"><a href="/#team-section" class="nav-link">Our Team</a></li>
+          <li class="nav-item"><a href="/#contact-section" class="nav-link">Contact</a></li>
+      </ul>
+
+      <ul class="nav navbar-inverse navbar-right">
+          {% if current_user.is_authenticated %}
+{#                  <div class="nav-item dropdown">#}
+{#                      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">#}
+{#                          {{ current_user.username }}<span class="caret"></span>#}
+{#                      </a>#}
+{#                      <ul class="dropdown-menu">#}
+{#                          <li class="dropdown-item"><a href="{{ url_for('upload') }}">Upload Video</a></li>#}
+{#                          <li class="dropdown-item"><a href="{{ url_for('logout') }}">Logout</a></li>#}
+{#                      </ul>#}
+{#                  </div>#}
+            <li class="nav-item"><a href="{{ url_for('upload') }}">Upload Video&nbsp;&nbsp;&nbsp</a></li>
+            <li class="nav-item"><a href="{{ url_for('profile', user_id=current_user.id) }}">Profile&nbsp;&nbsp;&nbsp</a></li>
+            <li class="nav-item"><a href="{{ url_for('logout') }}">Logout</a></li>
+          {% else %}
+          <li class="nav">
+            <li class="nav-item"><a href="/login">Sign Up/Sign In</a></li>
+          </li>
+          {% endif %}
+      </ul>
+
+  </div>
+</nav>

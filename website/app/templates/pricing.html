@@ -1,0 +1,185 @@
+{% extends "bootstrap/base.html" %}
+
+{% block html_attribs %}
+    lang="en"
+{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    {% include 'head.html' %}
+{% endblock %}
+
+{% block title %}
+    Pricing
+{% endblock %}
+
+{% block metas %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+{% endblock %}
+
+{% block styles %}
+{#{{super()}}#}
+    <!-- Bootstrap core CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900|Playfair+Display:400,700,900 " rel="stylesheet">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/icomoon/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fancybox.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datepicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/flaticon/font/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="pricing py-5">
+  <div class="container">
+    <div class="row">
+      <!-- Empty, for Layout -->
+      <div class="col-lg-1"></div>
+
+      <!-- Free Tier -->
+      <div class="col-lg-4">
+        <div class="card mb-5 mb-lg-0">
+          <div class="card-body">
+                <h2 class="h3 mb-3 font-weight-normal text-uppercase text-center">Basic</h2>
+            <h6 class="card-price text-center">$0<span class="period">/month</span></h6>
+            <hr>
+            <ul class="fa-ul">
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>50 uploads/month</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Shot visualizations</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Add shots to profile</li>
+              <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Ability to join contests</li>
+            </ul>
+            <div class="row-lg-18" align="center">
+                <p><a href="register" class="btn btn-outline-primary mr-2 mb-2">Sign up for free!</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+{#      <!-- Plus Tier -->#}
+{#      <div class="col-lg-4">#}
+{#        <div class="card mb-5 mb-lg-0">#}
+{#          <div class="card-body">#}
+{#              <h2 class="section-title mb-3" style="color:mediumseagreen">Professional</h2>#}
+{#                <h2 class="h3 mb-3 font-weight-normal text-uppercase text-center">Professional</h2>#}
+{##}
+{#            <h6 class="card-price text-center">$9<span class="period">/month</span></h6>#}
+{#            <hr>#}
+{#            <ul class="fa-ul">#}
+{#              <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>5 Users</strong></li>#}
+{#              <li><span class="fa-li"><i class="fas fa-check"></i></span>50GB Storage</li>#}
+{#              <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Public Projects</li>#}
+{#              <li><span class="fa-li"><i class="fas fa-check"></i></span>Community Access</li>#}
+{#              <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Private Projects</li>#}
+{#              <li><span class="fa-li"><i class="fas fa-check"></i></span>Dedicated Phone Support</li>#}
+{#              <li><li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Free Subdomain</li>#}
+{#              <li><li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Monthly Status Reports</li>#}
+{#            </ul>#}
+{#              <div class="row-lg-18" align="center">#}
+{#              <p><a href="payment" class="btn btn-primary mr-2 mb-2">Subscribe</a></p>#}
+{#              </div>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+      <!-- Empty, for Layout -->
+      <div class="col-lg-1"></div>
+
+      <!-- Premium Tier -->
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+              <h5 class="h3 mb-3 font-weight-normal text-uppercase text-center">Premium</h5>
+{#            <h5 class="card-title text-muted text-uppercase text-center">Premium</h5>#}
+            <h6 class="card-price text-center">$8<span class="period">/month</span></h6>
+            <hr>
+            <ul class="fa-ul">
+              <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>Unlimited</strong> uploads</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Shot visualizations</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Add shots to profile</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Ability to join contests</li>
+            </ul>
+            <div class="row-lg-18" align="center">
+                <p><a href="payment" class="btn btn-primary mr-2 mb-2">Subscribe</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty, for Layout -->
+      <div class="col-lg-1"></div>
+
+    </div>
+      <br>
+      <br>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-5">
+            <h2 class="footer-heading mb-4">About Azimuth</h2>
+            <p>Azimuth, Inc. is an application which golfers of all abilities can use to hone their skills,
+              challenge themselves, and compete and interact with friends with a Topgolf-like experience.</p>
+           </div>
+          <div class="col-md-3 ml-auto">
+            <h2 class="footer-heading mb-4">Quick Links</h2>
+            <ul class="list-unstyled">
+              <li><a href="/#about-section">About Us</a></li>
+              <li><a href="/#features-section">Features</a></li>
+              <li><a href="/#testimonials-section">Testimonials</a></li>
+              <li><a href="/#contact-section">Contact Us</a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="mb-4">
+            <h2 class="footer-heading mb-4">Subscribe Newsletter</h2>
+            <form action="#" method="post" class="footer-subscribe">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control border-secondary text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-primary text-black" type="button" id="button-addon2">Send</button>
+                </div>
+              </div>
+            </form>
+        </div>
+
+        <div class="">
+          <h2 class="footer-heading mb-4">Follow Us</h2>
+            <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+            <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
+            <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
+            <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="row pt-5 mt-5 text-center">
+      <div class="col-md-12">
+        <div class="border-top pt-5">
+        <p>
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+  </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</footer>
+{% endblock %}

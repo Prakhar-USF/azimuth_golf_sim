@@ -1,0 +1,488 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>predict &#8212; Azimuth 0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for predict</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">wave</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">imutils</span>
+<span class="kn">import</span> <span class="nn">audioread</span>
+<span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">soundfile</span> <span class="k">as</span> <span class="nn">sf</span>
+
+
+<div class="viewcode-block" id="Decoder"><a class="viewcode-back" href="../code.html#predict.Decoder">[docs]</a><span class="k">class</span> <span class="nc">Decoder</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Video decoder.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Decoder.decode"><a class="viewcode-back" href="../code.html#predict.Decoder.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Main function to decode a video file.</span>
+
+<span class="sd">        :param filename: file path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File not found.&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="c1"># sys.exit(1)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1">#import pdb</span>
+            <span class="c1">#pdb.set_trace()</span>
+            <span class="k">with</span> <span class="n">audioread</span><span class="o">.</span><span class="n">audio_open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="c1"># print(&#39;Input file: %i channels at %i Hz; %.1f seconds.&#39; %</span>
+                <span class="c1">#       (f.channels, f.samplerate, f.duration),</span>
+                <span class="c1">#       file=sys.stderr)</span>
+                <span class="c1"># print(&#39;Backend:&#39;, str(type(f).__module__).split(&#39;.&#39;)[1],</span>
+                <span class="c1">#       file=sys.stderr)</span>
+
+                <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">closing</span><span class="p">(</span><span class="n">wave</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="o">+</span><span class="s1">&#39;.wav&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">of</span><span class="p">:</span>
+                    <span class="n">of</span><span class="o">.</span><span class="n">setnchannels</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">channels</span><span class="p">)</span>
+                    <span class="n">of</span><span class="o">.</span><span class="n">setframerate</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">samplerate</span><span class="p">)</span>
+                    <span class="n">of</span><span class="o">.</span><span class="n">setsampwidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+                    <span class="k">for</span> <span class="n">buf</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="n">of</span><span class="o">.</span><span class="n">writeframes</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">audioread</span><span class="o">.</span><span class="n">DecodeError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File could not be decoded.&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span></div></div>
+            <span class="c1"># sys.exit(1)</span>
+
+
+<div class="viewcode-block" id="Step1"><a class="viewcode-back" href="../code.html#predict.Step1">[docs]</a><span class="k">class</span> <span class="nc">Step1</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Step1.get_frames"><a class="viewcode-back" href="../code.html#predict.Step1.get_frames">[docs]</a>    <span class="k">def</span> <span class="nf">get_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract frames from a video.</span>
+
+<span class="sd">        :param video_path: video file path</span>
+<span class="sd">        :return: A list of frames</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vs</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">video_path</span><span class="p">)</span>
+        <span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">success</span><span class="p">,</span> <span class="n">image</span> <span class="o">=</span> <span class="n">vs</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">frames</span></div>
+
+<div class="viewcode-block" id="Step1.get_width"><a class="viewcode-back" href="../code.html#predict.Step1.get_width">[docs]</a>    <span class="k">def</span> <span class="nf">get_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual_contour</span><span class="p">,</span> <span class="n">y_val</span><span class="p">):</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">midpt</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">thresh</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">middle</span> <span class="o">=</span> <span class="n">actual_contour</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">actual_contour</span><span class="o">.</span><span class="n">y</span><span class="o">-</span><span class="n">y_val</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">thresh</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">middle</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">width</span> <span class="o">=</span> <span class="n">middle</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">middle</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+                <span class="n">midpt</span> <span class="o">=</span> <span class="n">middle</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">thresh</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">width</span><span class="p">,</span> <span class="n">midpt</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Step1.get_features"><a class="viewcode-back" href="../code.html#predict.Step1.get_features">[docs]</a>    <span class="k">def</span> <span class="nf">get_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual_contour</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                     <span class="n">frame_no</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bbox_no</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate contour features: 80% width, max width, leading edge (x, y),</span>
+<span class="sd">        direction, distance, frame index, bounding box index (if exist)</span>
+
+<span class="sd">        :param actual_contour: the contour to be analyzed</span>
+<span class="sd">        :param plot: bool, default False, if True, plot the contour</span>
+<span class="sd">        :param frame_no: frame index</span>
+<span class="sd">        :param bbox_no: the index of the bounding box detected in the frame</span>
+<span class="sd">        :return: contour features</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">widths</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">actual_contour</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+            <span class="n">width_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_width</span><span class="p">(</span><span class="n">actual_contour</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">width_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+            <span class="n">widths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">width_y</span><span class="p">)</span>
+        <span class="n">widths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">widths</span><span class="p">)</span>
+        <span class="n">widths</span> <span class="o">=</span> <span class="n">widths</span><span class="p">[</span><span class="n">widths</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">width_80</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">widths</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">width_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">widths</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1"># if plot:</span>
+        <span class="c1">#     plt.scatter(widths[:, 2], widths[:, 0])</span>
+        <span class="c1">#     plt.show()</span>
+        <span class="c1">#</span>
+        <span class="c1">#     plt.scatter(actual_contour.x, actual_contour.y)</span>
+        <span class="c1">#     plt.scatter(widths[:, 1], widths[:, 2])</span>
+        <span class="c1">#     plt.show()</span>
+
+        <span class="n">tail</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">widths</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:])</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">widths</span><span class="p">[:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:])</span>
+        <span class="n">leading_edge</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">diffs</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">tail</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">diffs</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dist</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">**</span> <span class="o">.</span><span class="mi">5</span>
+
+        <span class="n">direction</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">diffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">direction</span> <span class="o">=</span> <span class="n">diffs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">diffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">bbox_no</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">width_80</span><span class="p">,</span> <span class="n">width_max</span><span class="p">,</span> <span class="n">leading_edge</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">leading_edge</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">direction</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">width_80</span><span class="p">,</span> <span class="n">width_max</span><span class="p">,</span> <span class="n">leading_edge</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">leading_edge</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">direction</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span>
+                    <span class="n">frame_no</span><span class="p">,</span> <span class="n">bbox_no</span><span class="p">)</span></div>
+
+    <span class="c1"># requires initial ball position for now</span>
+<div class="viewcode-block" id="Step1.step_1"><a class="viewcode-back" href="../code.html#predict.Step1.step_1">[docs]</a>    <span class="k">def</span> <span class="nf">step_1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path</span><span class="p">,</span> <span class="n">ball_init</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span>
+               <span class="n">predict_impact</span><span class="p">,</span> <span class="n">classify_bbox</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Step One: find the frames in which the ball has been hit and is flying,</span>
+<span class="sd">        then get the contour features and bounding boxes of the moving ball.</span>
+
+<span class="sd">        :param video_path: video file path</span>
+<span class="sd">        :param ball_init: (currently fixed) bounding box of the pre-impact ball</span>
+<span class="sd">        :param frames: a list of frames</span>
+<span class="sd">        :param predict_impact: model for predicting the exact frame</span>
+<span class="sd">        when the ball is hit</span>
+<span class="sd">        :param classify_bbox: model for detecting the bounding boxes</span>
+<span class="sd">        :return: three lists - frame indices, contour features, bounding boxes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">decoder</span> <span class="o">=</span> <span class="n">Decoder</span><span class="p">()</span>
+        <span class="n">decoder</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">video_path</span><span class="p">)</span>
+
+        <span class="n">golf_shot</span><span class="p">,</span> <span class="n">samplerate</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">video_path</span> <span class="o">+</span> <span class="s1">&#39;.wav&#39;</span><span class="p">)</span>
+        <span class="n">golf_shot</span> <span class="o">=</span> <span class="n">golf_shot</span><span class="p">[</span><span class="mi">800000</span><span class="p">:]</span>
+        <span class="n">max_800k</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">golf_shot</span><span class="p">)</span>
+        <span class="n">argmax_800k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">golf_shot</span><span class="p">)</span>
+
+        <span class="n">est_impact</span> <span class="o">=</span> <span class="n">predict_impact</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">argmax_800k</span><span class="p">,</span> <span class="n">max_800k</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># frames = get_frames(video_path)</span>
+        <span class="n">ball_pos</span> <span class="o">=</span> <span class="n">ball_init</span>
+
+        <span class="n">threshold</span> <span class="o">=</span> <span class="mi">40</span>
+        <span class="n">num_since_found</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">impact</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">counter</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">est_impact</span> <span class="o">-</span> <span class="mi">500</span><span class="p">)</span>
+        <span class="n">last_frame</span> <span class="o">=</span> <span class="n">frames</span><span class="p">[</span><span class="n">counter</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">last_frame</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+        <span class="n">last_frame</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">frame_nos</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ball_contour_features</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ball_boxes</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">while</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames</span><span class="p">):</span>
+            <span class="n">frame</span> <span class="o">=</span> <span class="n">frames</span><span class="p">[</span><span class="n">counter</span><span class="p">]</span>
+            <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+            <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">frame_delta</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">absdiff</span><span class="p">(</span><span class="n">last_frame</span><span class="p">,</span> <span class="n">gray</span><span class="p">)</span>
+            <span class="n">thresh</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">frame_delta</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span>
+                                   <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">thresh</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">dilate</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">cnts</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">thresh</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span>
+                                    <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span><span class="p">)</span>
+            <span class="n">cnts</span> <span class="o">=</span> <span class="n">imutils</span><span class="o">.</span><span class="n">grab_contours</span><span class="p">(</span><span class="n">cnts</span><span class="p">)</span>
+
+            <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">contour</span> <span class="ow">in</span> <span class="n">cnts</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">cv2</span><span class="o">.</span><span class="n">contourArea</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">200</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">ball_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">contour_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">contour</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                                              <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">])</span>
+                    <span class="n">contour_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">contour_features</span> <span class="o">=</span> \
+                        <span class="bp">self</span><span class="o">.</span><span class="n">get_features</span><span class="p">(</span><span class="n">contour_df</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                    <span class="n">feat</span> <span class="o">=</span> <span class="p">[</span><span class="n">contour_features</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">ball_init</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                            <span class="n">contour_features</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ball_pos</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                            <span class="n">contour_features</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">ball_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                            <span class="n">contour_features</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">ball_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                            <span class="n">contour_features</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">/</span> <span class="n">ball_init</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                            <span class="n">contour_features</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">-</span> <span class="n">ball_pos</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
+                    <span class="n">feat_pred</span> <span class="o">=</span> <span class="n">classify_bbox</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+
+                    <span class="k">if</span> <span class="n">feat_pred</span> <span class="o">&gt;</span> <span class="o">.</span><span class="mi">7</span><span class="p">:</span>  <span class="c1"># threshold is hard coded for now</span>
+                        <span class="n">frame_nos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
+                        <span class="n">ball_contour_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">contour_features</span><span class="p">)</span>
+                        <span class="n">ball_boxes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">(</span><span class="n">contour</span><span class="p">))</span>
+
+                        <span class="n">ball_pos</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">]</span>
+                        <span class="n">num_since_found</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">impact</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="c1">#                     print(shot_no)</span>
+                        <span class="c1">#                     print(counter)</span>
+                        <span class="k">break</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+                <span class="n">num_since_found</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="n">impact</span> <span class="ow">and</span> <span class="n">num_since_found</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">threshold</span> <span class="o">-=</span> <span class="mi">5</span>
+                <span class="c1">#             print(threshold)</span>
+                <span class="n">counter</span> <span class="o">-=</span> <span class="n">num_since_found</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">num_since_found</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">last_frame</span> <span class="o">=</span> <span class="n">frames</span><span class="p">[</span><span class="n">counter</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">last_frame</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+                <span class="n">last_frame</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">threshold</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">last_frame</span> <span class="o">=</span> <span class="n">gray</span>
+                <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">frame_nos</span><span class="p">,</span> <span class="n">ball_contour_features</span><span class="p">,</span> <span class="n">ball_boxes</span></div></div>
+
+
+<div class="viewcode-block" id="Step2"><a class="viewcode-back" href="../code.html#predict.Step2">[docs]</a><span class="k">class</span> <span class="nc">Step2</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Step2.add_na_rows"><a class="viewcode-back" href="../code.html#predict.Step2.add_na_rows">[docs]</a>    <span class="k">def</span> <span class="nf">add_na_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shot_df</span><span class="p">,</span> <span class="n">session_init</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add na rows (filled with -1&#39;s) if there is a gap in the frames</span>
+<span class="sd">        in which the ball is detected.</span>
+
+<span class="sd">        :param shot_df: shot factors</span>
+<span class="sd">        :param session_init: bounding box of the ball pre-impact</span>
+<span class="sd">        :return: data frame with missing frames filled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">max_since_impact</span> <span class="o">=</span> <span class="n">shot_df</span><span class="o">.</span><span class="n">since_impact</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">num_rows</span> <span class="o">=</span> <span class="n">max_since_impact</span><span class="o">-</span><span class="n">shot_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">impact_frame</span> <span class="o">=</span> <span class="n">shot_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">zerodf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shot_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+                               <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rows</span><span class="p">)],</span>
+                              <span class="n">columns</span><span class="o">=</span><span class="n">shot_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">zerodf</span><span class="o">.</span><span class="n">since_impact</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_since_impact</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                               <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">shot_df</span><span class="o">.</span><span class="n">since_impact</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+        <span class="n">zerodf</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">impact_frame</span><span class="p">,</span>
+                                         <span class="n">impact_frame</span><span class="o">+</span><span class="n">max_since_impact</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">shot_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+        <span class="n">shot_df</span><span class="o">.</span><span class="n">width_max</span> <span class="o">=</span> <span class="n">shot_df</span><span class="o">.</span><span class="n">width_max</span><span class="o">/</span><span class="n">session_init</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">shot_df</span><span class="o">.</span><span class="n">leading_edge_x</span> <span class="o">=</span> <span class="n">shot_df</span><span class="o">.</span><span class="n">leading_edge_x</span><span class="o">/</span><span class="n">session_init</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">shot_df</span><span class="o">.</span><span class="n">leading_edge_y</span> <span class="o">=</span> <span class="n">shot_df</span><span class="o">.</span><span class="n">leading_edge_y</span><span class="o">/</span><span class="n">session_init</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">shot_df</span><span class="p">,</span> <span class="n">zerodf</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">combined</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;since_impact&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Step2.make_df"><a class="viewcode-back" href="../code.html#predict.Step2.make_df">[docs]</a>    <span class="k">def</span> <span class="nf">make_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_nos</span><span class="p">,</span> <span class="n">ball_contour_features</span><span class="p">,</span> <span class="n">ball_init</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct a data frame for the output of `Step1.step_1`.</span>
+
+<span class="sd">        :param frame_nos: selected frame indices</span>
+<span class="sd">        :param ball_contour_features: ball contour features</span>
+<span class="sd">        :param ball_init: (currently fixed) bounding box of the pre-impact ball</span>
+<span class="sd">        :return: data frame including all the input information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">contour_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ball_contour_features</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">frame_nos</span><span class="p">,</span>
+                                  <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;width_80&#39;</span><span class="p">,</span> <span class="s1">&#39;width_max&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;leading_edge_x&#39;</span><span class="p">,</span> <span class="s1">&#39;leading_edge_y&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;direction&#39;</span><span class="p">,</span> <span class="s1">&#39;length&#39;</span><span class="p">])</span>
+        <span class="n">contour_df</span><span class="p">[</span><span class="s1">&#39;since_impact&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">contour_df</span><span class="o">.</span><span class="n">index</span> <span class="o">-</span> <span class="n">contour_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">contour_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_na_rows</span><span class="p">(</span><span class="n">contour_df</span><span class="p">,</span> <span class="n">ball_init</span><span class="p">)</span>
+
+        <span class="n">wide</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">contour_df</span><span class="o">.</span><span class="n">width_80</span><span class="p">,</span>
+                          <span class="n">contour_df</span><span class="o">.</span><span class="n">width_max</span><span class="p">,</span>
+                          <span class="n">contour_df</span><span class="o">.</span><span class="n">leading_edge_x</span><span class="p">,</span>
+                          <span class="n">contour_df</span><span class="o">.</span><span class="n">leading_edge_y</span><span class="p">,</span>
+                          <span class="n">contour_df</span><span class="o">.</span><span class="n">direction</span><span class="p">,</span>
+                          <span class="n">contour_df</span><span class="o">.</span><span class="n">length</span><span class="p">])</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">col_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">contour_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">contour_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="n">col_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="n">wide_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">wide</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">wide_df</span></div>
+
+<div class="viewcode-block" id="Step2.make_predictions"><a class="viewcode-back" href="../code.html#predict.Step2.make_predictions">[docs]</a>    <span class="k">def</span> <span class="nf">make_predictions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wide_df</span><span class="p">,</span> <span class="n">ball_init</span><span class="p">,</span> <span class="n">azimuth_regr</span><span class="p">,</span>
+                         <span class="n">back_spin_regr</span><span class="p">,</span> <span class="n">ball_speed_regr</span><span class="p">,</span> <span class="n">launch_angle_regr</span><span class="p">,</span>
+                         <span class="n">side_spin_dt</span><span class="p">,</span> <span class="n">azimuth_high</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predict the five factors needed for trajectory prediction.</span>
+
+<span class="sd">        :param wide_df: data frame of contour data</span>
+<span class="sd">        :param ball_init: (currently fixed) bounding box of the pre-impact ball</span>
+<span class="sd">        :param azimuth_regr: model to predict azimuth</span>
+<span class="sd">        :param back_spin_regr: model to predict back-spin</span>
+<span class="sd">        :param ball_speed_regr: model to predict ball speed</span>
+<span class="sd">        :param launch_angle_regr: model to predict azimuth</span>
+<span class="sd">        :param side_spin_dt: model to predict side-spin</span>
+<span class="sd">        :param azimuth_high: model to predict azimuth (high)</span>
+<span class="sd">        :return: a dictionary of factors {factor name: value}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">back_spin_x</span> <span class="o">=</span> <span class="n">wide_df</span><span class="o">.</span><span class="n">leading_edge_y_3</span><span class="o">.</span><span class="n">values</span> <span class="o">/</span> <span class="n">ball_init</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="n">azimuth</span> <span class="o">=</span> <span class="n">azimuth_regr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+            <span class="n">wide_df</span><span class="o">.</span><span class="n">leading_edge_x_3</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">back_spin</span> <span class="o">=</span> <span class="n">back_spin_regr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">back_spin_x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">ball_speed</span> <span class="o">=</span> <span class="n">ball_speed_regr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+            <span class="n">wide_df</span><span class="o">.</span><span class="n">width_max_3</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">launch_angle</span> <span class="o">=</span> <span class="n">launch_angle_regr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">back_spin_x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+        <span class="n">azimuth_pred_3</span> <span class="o">=</span> <span class="n">azimuth_regr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+            <span class="n">wide_df</span><span class="o">.</span><span class="n">leading_edge_x_3</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">azimuth_pred_high</span> <span class="o">=</span> <span class="n">azimuth_high</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+            <span class="n">wide_df</span><span class="o">.</span><span class="n">leading_edge_x_6</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">side_spin_x</span> <span class="o">=</span> <span class="n">azimuth_pred_high</span> <span class="o">-</span> <span class="n">azimuth_pred_3</span>
+        <span class="n">side_spin</span> <span class="o">=</span> <span class="n">side_spin_dt</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">side_spin_x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;azimuth&#39;</span><span class="p">:</span> <span class="n">azimuth</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;back_spin&#39;</span><span class="p">:</span> <span class="n">back_spin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="s1">&#39;ball_speed&#39;</span><span class="p">:</span> <span class="n">ball_speed</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;launch_angle&#39;</span><span class="p">:</span> <span class="n">launch_angle</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="s1">&#39;side_spin&#39;</span><span class="p">:</span> <span class="n">side_spin</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span></div>
+
+<div class="viewcode-block" id="Step2.get_shot_factors"><a class="viewcode-back" href="../code.html#predict.Step2.get_shot_factors">[docs]</a>    <span class="k">def</span> <span class="nf">get_shot_factors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path</span><span class="p">,</span> <span class="n">ball_init</span><span class="p">,</span> <span class="n">predict_impact</span><span class="p">,</span>
+                         <span class="n">classify_bbox</span><span class="p">,</span> <span class="n">azimuth_regr</span><span class="p">,</span> <span class="n">back_spin_regr</span><span class="p">,</span>
+                         <span class="n">ball_speed_regr</span><span class="p">,</span> <span class="n">launch_angle_regr</span><span class="p">,</span>
+                         <span class="n">side_spin_dt</span><span class="p">,</span> <span class="n">azimuth_high</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The main function to get shot factors from raw video file.</span>
+
+<span class="sd">        :param video_path: video file path</span>
+<span class="sd">        :param ball_init: (currently fixed) bounding box of the pre-impact ball</span>
+<span class="sd">        :param predict_impact: model for predicting the exact frame</span>
+<span class="sd">        when the ball is hit</span>
+<span class="sd">        :param classify_bbox: model for detecting the bounding boxes</span>
+<span class="sd">        :param azimuth_regr: model to predict azimuth</span>
+<span class="sd">        :param back_spin_regr: model to predict back-spin</span>
+<span class="sd">        :param ball_speed_regr: model to predict ball speed</span>
+<span class="sd">        :param launch_angle_regr: model to predict azimuth</span>
+<span class="sd">        :param side_spin_dt: model to predict side-spin</span>
+<span class="sd">        :param azimuth_high: model to predict azimuth (high)</span>
+<span class="sd">        :return: a dictionary of factors {factor name: value}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s1</span> <span class="o">=</span> <span class="n">Step1</span><span class="p">()</span>
+        <span class="n">frames</span> <span class="o">=</span> <span class="n">s1</span><span class="o">.</span><span class="n">get_frames</span><span class="p">(</span><span class="n">video_path</span><span class="p">)</span>
+        <span class="n">frame_nos</span><span class="p">,</span> <span class="n">ball_contour_features</span><span class="p">,</span> <span class="n">ball_boxes</span> <span class="o">=</span> \
+            <span class="n">s1</span><span class="o">.</span><span class="n">step_1</span><span class="p">(</span><span class="n">video_path</span><span class="p">,</span> <span class="n">ball_init</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span>
+                      <span class="n">predict_impact</span><span class="p">,</span> <span class="n">classify_bbox</span><span class="p">)</span>
+        <span class="n">feature_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_df</span><span class="p">(</span><span class="n">frame_nos</span><span class="p">,</span> <span class="n">ball_contour_features</span><span class="p">,</span> <span class="n">ball_init</span><span class="p">)</span>
+        <span class="n">shot_factors</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">make_predictions</span><span class="p">(</span><span class="n">feature_df</span><span class="p">,</span> <span class="n">ball_init</span><span class="p">,</span> <span class="n">azimuth_regr</span><span class="p">,</span>
+                                  <span class="n">back_spin_regr</span><span class="p">,</span> <span class="n">ball_speed_regr</span><span class="p">,</span>
+                                  <span class="n">launch_angle_regr</span><span class="p">,</span> <span class="n">side_spin_dt</span><span class="p">,</span>
+                                  <span class="n">azimuth_high</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">shot_factors</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Azimuth</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">About Us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Management Team</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Environment Set-up Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Azimuth, Ltd.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
