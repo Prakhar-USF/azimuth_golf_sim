@@ -12,7 +12,7 @@ You take a video of yourself, hitting a golf ball into a net, and upload it to o
 
 ![Sample Results](/images/sample_result.png)
 
-You get an estimate of your shot's carry, offline and total distance, in addition to getting one for ball speed, launch angle, azimuth and side and back spin.
+You get an estimate of your shot's **Carry**, **Offline** and **Total Distance**, in addition to getting one for *Ball Speed*, *Launch Angle*, *Azimuth* and *Side Spin* and *Back Spin*.
 
 Not only that, you get to see your shot's trajectory and to play aroud with it (i.e., zoom, rotate, play and pause etc.)
 
