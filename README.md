@@ -20,7 +20,7 @@ You can also enter contests like the one below, and compete with your friends or
 
 ![Contest Leaderboard](/images/contest_leaderboard.png)
 
-## A link to the instructions for deploying the website:
+### A link to the instructions for deploying the website:
 - [Instructions Link](https://github.com/Prakhar-USF/azimuth_golf_sim/tree/master/instructions)
 
 *This repository is the duplication of the original private repository with confidential contents removed.*
